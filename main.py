@@ -1,14 +1,20 @@
+from socketio import ASGIApp, AsyncServer
 from fastapi import FastAPI
-from fastapi_socketio import SocketManager
+from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI( )
-app.add_middleware( CORSMiddleware, allow_origins=["*"])
-io = SocketManager( app=app, cors_allowed_origins="*" )
+app = FastAPI()
 
-@app.sio.on('connect')
-async def connect( sid, environ ):
-    print('conectado')
-    print("conectado:" + sid )
-    await io.emit('message', 'Bienvenido', to= io )
+sio = AsyncServer( cors_allowed_origins="*", async_mode='asgi')
 
+socket_app = ASGIApp(sio)
+
+app.mount('/socket.io', app=socket_app)
+
+@app.get("/")
+def home():
+    return "hello"
+
+@sio.event
+async def connect( sid, env):
+    print("New client:" + str(sid))
