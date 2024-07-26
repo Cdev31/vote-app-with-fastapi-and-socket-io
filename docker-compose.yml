@@ -1,0 +1,16 @@
+version: '3.5'
+
+services:
+ db:
+  image: mysql
+  container_name: voteDb
+  restart: always
+  environment:
+    MYSQL_USER: admin
+    MYSQL_PASSWORD: admin_123
+    MYSQL_DATABASE: votedb
+    MYSQL_ROOT_PASSWORD: root_123
+  ports:
+   - "3306:3306"
+  volumes:
+   - ./data:/var/lib/mysql
