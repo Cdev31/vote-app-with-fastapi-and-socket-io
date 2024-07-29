@@ -23,7 +23,7 @@ class SurveyModel( Base ):
 
     endDate: Column[date] = Column( "end_date", DATE, nullable=False )
 
-    status: Column[str] = Column( "status", ENUM(["Active", "Completed", "Canceled"], ), nullable=False )
+    status: Column[str] = Column( "status", ENUM(["Active", "Ending", "Paused", 'Inactive'], ), nullable=False )
 
     description: Column[str] = Column( "description", TEXT, nullable=False )
 

@@ -1,0 +1,5 @@
+from interfaces.surver_interface import SurverInterface
+from interfaces.auth_interface import AuthInterface
+from interfaces.user_interface import UserInterface
+from interfaces.voter_interface import VoterInterface
+from interfaces.votes_interface import VotesInterface

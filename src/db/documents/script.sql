@@ -25,7 +25,7 @@ CREATE TABLE surveys (
     end_date DATE NOT NULL,
     description TEXT NOT NULL,
     active TINYINT NOT NULL DEFAULT 0,
-    status ENUM('Active', 'Completed', 'Canceled') NOT NULL,
+    status ENUM('Active', 'Inactive' 'Paused', 'Completed') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT FK_USER FOREIGN KEY ( user_id ) REFERENCES users( id ),
     CONSTRAINT CHECK_DATE CHECK( start_date <= end_date )

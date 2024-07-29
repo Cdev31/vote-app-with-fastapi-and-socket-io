@@ -1,10 +1,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-
+from config.config import config
 
 engine = create_engine(
-    url= '',
+    url= config['db_url'],
     pool_size=10
 )
 
