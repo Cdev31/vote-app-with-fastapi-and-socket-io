@@ -9,6 +9,7 @@ CREATE TABLE users(
     password VARCHAR(255) NOT NULL,
     phone_number VARCHAR(12) NOT NULL,
     dui CHAR(12) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE ( email ),
     UNIQUE( password ),
     UNIQUE ( dui )
@@ -22,8 +23,10 @@ CREATE TABLE surveys (
     start_date DATE NOT NULL,
     end_hour TIME NOT NULL,
     end_date DATE NOT NULL,
-    active BOOLEAN NOT NULL,
-    status ENUM('Active', 'Completed', 'Canceled'),
+    description TEXT NOT NULL,
+    active TINYINT NOT NULL DEFAULT 0,
+    status ENUM('Active', 'Completed', 'Canceled') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT FK_USER FOREIGN KEY ( user_id ) REFERENCES users( id ),
     CONSTRAINT CHECK_DATE CHECK( start_date <= end_date )
 );
@@ -31,6 +34,7 @@ CREATE TABLE surveys (
 CREATE TABLE surveys_option (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     survey_id INTEGER NOT NULL,
+    title VARCHAR(50) NOT NULL,
     CONSTRAINT FK_SURVEY FOREIGN KEY ( survey_id ) REFERENCES surveys( id )
 );
 
@@ -39,6 +43,7 @@ CREATE TABLE voters (
     name VARCHAR(30) NOT NULL,
     email VARCHAR(255) NOT NULL,
     dui CHAR(12) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE ( email ),
     UNIQUE ( dui )
 );
@@ -47,6 +52,7 @@ CREATE TABLE votes(
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     surveys_option_id INTEGER NOT NULL,
     voter_id INTEGER NOT NULL,
+    vote_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT FK_SURVEYS_OPTION FOREIGN KEY ( surveys_option_id ) REFERENCES surveys_option ( id ),
     CONSTRAINT FK_VOTER FOREIGN KEY ( voter_id ) REFERENCES voters( id )
 );
